@@ -3,8 +3,8 @@
 ## Toe_trajectory_and_minTC_fromVicon.m
 Analyzes 3D motion capture data to extract toe clearance during the swing phase. Computes and visualizes minimum toe clearance (minTC) for left and right feet using .c3d files.
 
--Uses BTK toolkit
--Detects toe-off and heel-strike events
+-Uses BTK toolkit 
+-Detects toe-off and heel-strike events 
 -Normalizes and plots toe clearance trajectories
 
 ## Gait_Analysis_with_IMU.m
