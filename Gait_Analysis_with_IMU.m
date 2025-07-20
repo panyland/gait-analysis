@@ -63,9 +63,9 @@ end
 %% Detect heelstrikes
 
 % Parameters for peak detection
-minPeakHeight = 12;  % Set to the minimum expected peak height, adjust based on your data
-minPeakDistance = 100;  % Minimum samples between peaks to avoid detecting multiple peaks for the same heel strike
-maxPeakWidth = 20; % Set to detect only sharpest peaks
+minPeakHeight = 12;  
+minPeakDistance = 100;  
+maxPeakWidth = 20; 
 
 % Find peaks for left shank vertical acceleration
 [left_peaks, left_locs] = findpeaks(acc_filtered.left_shank(:,1), ...
@@ -98,40 +98,40 @@ hold off;
 
 % Plotting acceleration for the Left Foot
 figure;
-subplot(3, 1, 1);  % Subplot for X-axis acceleration
-plot(time, acc_filtered.left_foot(:, 1), 'r');  % Assume X-axis data is in column 1
+subplot(3, 1, 1);  
+plot(time, acc_filtered.left_foot(:, 1), 'r'); 
 title('Left Foot Acceleration - X Axis');
 xlabel('Time (s)');
 ylabel('Acceleration (m/s^2)');
 
-subplot(3, 1, 2);  % Subplot for Y-axis acceleration
-plot(time, acc_filtered.left_foot(:, 2), 'g');  % Assume Y-axis data is in column 2
+subplot(3, 1, 2); 
+plot(time, acc_filtered.left_foot(:, 2), 'g');  
 title('Left Foot Acceleration - Y Axis');
 xlabel('Time (s)');
 ylabel('Acceleration (m/s^2)');
 
-subplot(3, 1, 3);  % Subplot for Z-axis acceleration
-plot(time, acc_filtered.left_foot(:, 3), 'b');  % Assume Z-axis data is in column 3
+subplot(3, 1, 3);  
+plot(time, acc_filtered.left_foot(:, 3), 'b'); 
 title('Left Foot Acceleration - Z Axis');
 xlabel('Time (s)');
 ylabel('Acceleration (m/s^2)');
 
 % Plotting acceleration for the Right Foot
 figure;
-subplot(3, 1, 1);  % Subplot for X-axis acceleration
-plot(time, acc_filtered.right_foot(:, 1), 'r');  % Red for X-axis
+subplot(3, 1, 1); 
+plot(time, acc_filtered.right_foot(:, 1), 'r');  
 title('Right Foot Acceleration - X Axis');
 xlabel('Time (s)');
 ylabel('Acceleration (m/s^2)');
 
-subplot(3, 1, 2);  % Subplot for Y-axis acceleration
-plot(time, acc_filtered.right_foot(:, 2), 'g');  % Green for Y-axis
+subplot(3, 1, 2);  
+plot(time, acc_filtered.right_foot(:, 2), 'g');  
 title('Right Foot Acceleration - Y Axis');
 xlabel('Time (s)');
 ylabel('Acceleration (m/s^2)');
 
-subplot(3, 1, 3);  % Subplot for Z-axis acceleration
-plot(time, acc_filtered.right_foot(:, 3), 'b');  % Blue for Z-axis
+subplot(3, 1, 3); 
+plot(time, acc_filtered.right_foot(:, 3), 'b');  
 title('Right Foot Acceleration - Z Axis');
 xlabel('Time (s)');
 ylabel('Acceleration (m/s^2)');
@@ -151,7 +151,7 @@ for i = 1:nStridesLeft
     startIndex = left_locs(i);
     endIndex = left_locs(i + 1) - 1;
     strideAccel = acc_filtered.left_foot(startIndex:endIndex, 1);  % Assuming X-axis is forward
-    strideAccel = strideAccel - mean(strideAccel);  % Remove mean to correct for any offset
+    strideAccel = strideAccel - mean(strideAccel);  
     strideVel = cumtrapz(strideAccel) * samplePeriod;
     strideDisp = cumtrapz(strideVel) * samplePeriod;
     stride_lengths_left(i) = abs(strideDisp(end));
@@ -162,7 +162,7 @@ for i = 1:nStridesRight
     startIndex = right_locs(i);
     endIndex = right_locs(i + 1) - 1;
     strideAccel = acc_filtered.right_foot(startIndex:endIndex, 1);  % Assuming X-axis is forward
-    strideAccel = strideAccel - mean(strideAccel);  % Remove mean to correct for any offset
+    strideAccel = strideAccel - mean(strideAccel);  
     strideVel = cumtrapz(strideAccel) * samplePeriod;
     strideDisp = cumtrapz(strideVel) * samplePeriod;
     stride_lengths_right(i) = abs(strideDisp(end));
@@ -190,7 +190,7 @@ max_vertical_displacements_left = zeros(nStridesLeft, 1);
 max_vertical_displacements_right = zeros(nStridesRight, 1);
 
 % Swing phase starts slightly after the heel strike; define the offset
-swing_phase_offset = 20; % Adjust based on your sampling rate and gait analysis (10)
+swing_phase_offset = 20; 
 
 % Initialize figure for plotting all trajectories
 figure;
@@ -203,14 +203,14 @@ for i = 1:nStridesLeft
     startIndex = left_locs(i) + swing_phase_offset;
     endIndex = left_locs(i + 1) - 1;
     verticalAccel = acc_filtered.left_foot(startIndex:endIndex, 3);  % Assuming Z-axis is vertical
-    verticalAccel = verticalAccel - mean(verticalAccel);  % Zero-mean correction
+    verticalAccel = verticalAccel - mean(verticalAccel);  
 
     % Double integration to get vertical displacement
     verticalVel = cumtrapz(verticalAccel) * samplePeriod;
     verticalDisp = cumtrapz(verticalVel) * samplePeriod;
 
     % Store the maximum vertical displacement for this stride
-    max_vertical_displacements_left(i) = max(abs(verticalDisp));  % Maximum displacement
+    max_vertical_displacements_left(i) = max(abs(verticalDisp)); 
 
     % Plotting the vertical trajectory for this stride
     plot(linspace(0, 100, length(verticalDisp)), abs(verticalDisp), 'DisplayName', sprintf('Left Stride %d', i));
@@ -230,14 +230,14 @@ for i = 1:nStridesRight
     startIndex = right_locs(i) + swing_phase_offset;
     endIndex = right_locs(i + 1) - 1;
     verticalAccel = acc_filtered.right_foot(startIndex:endIndex, 3);  % Assuming Z-axis is vertical
-    verticalAccel = verticalAccel - mean(verticalAccel);  % Zero-mean correction
+    verticalAccel = verticalAccel - mean(verticalAccel);  
 
     % Double integration to get vertical displacement
     verticalVel = cumtrapz(verticalAccel) * samplePeriod;
     verticalDisp = cumtrapz(verticalVel) * samplePeriod;
 
     % Store the maximum vertical displacement for this stride
-    max_vertical_displacements_right(i) = max(abs(verticalDisp));  % Maximum displacement
+    max_vertical_displacements_right(i) = max(abs(verticalDisp));  
 
     % Plotting the vertical trajectory for this stride
     plot(linspace(0, 100, length(verticalDisp)), abs(verticalDisp), 'DisplayName', sprintf('Right Stride %d', i));
@@ -328,11 +328,11 @@ grid on;
 
 function eulerAnglesDeg = manualRotm2eul(rotMatrices)
     % Initialize the output matrix
-    N = size(rotMatrices, 3); % Number of time points
+    N = size(rotMatrices, 3); 
     eulerAnglesDeg = zeros(N, 3); % Each row will hold [yaw, pitch, roll] for a time point
     
     for i = 1:N
-        R = rotMatrices(:,:,i); % Extract the i-th rotation matrix
+        R = rotMatrices(:,:,i); 
 
         % Assuming the rotation matrix is in ZYX format (yaw-pitch-roll)
         if R(3,1) < 1
@@ -360,8 +360,8 @@ function eulerAnglesDeg = manualRotm2eul(rotMatrices)
 end
 
 function globalData = applyRotation(localData, rotationMatrices)
-    % Angle of incline in radians
-    angle_deg = -5;  % Tilt forward for uphill i.e -5
+    % Angle of incline
+    angle_deg = -5;  
     angle_rad = deg2rad(angle_deg);
 
     % Define the rotation matrix for the Y-axis incline
