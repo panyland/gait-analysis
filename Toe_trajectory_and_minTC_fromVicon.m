@@ -1,7 +1,3 @@
-%% Toe clearance calculation from 3D gait kinematics
-% By Paavo Nyländen
-% 12.10.2023
-
 clc;
 clear;
 close all;
